@@ -5,6 +5,7 @@ from typing import List
 
 languages = {}
 languages_present = {}
+commands = {}
 
 def get_command(value: str) -> List:
     return commands["command"][value]
