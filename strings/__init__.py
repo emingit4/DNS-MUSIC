@@ -23,7 +23,7 @@ def get_command(value: str) -> List:
     return commands["command"][value]
 
 
-def get_string(lang: str):
+def get_string(lang: str = "tuk"):
     return languages[lang]
 
 
