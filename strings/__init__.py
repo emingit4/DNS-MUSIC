@@ -40,10 +40,10 @@ for filename in os.listdir(r"./strings/langs/"):
         languages["tuk"] = yaml.safe_load(
             open(r"./strings/langs/tuk.yml", encoding="utf8")
         )
-        languages_present["en"] = languages["en"]["name"]
+        languages_present["tuk"] = languages["tuk"]["name"]
     if filename.endswith(".yml"):
         language_name = filename[:-4]
-        if language_name == "en":
+        if language_name == "tuk":
             continue
         languages[language_name] = yaml.safe_load(
             open(r"./strings/langs/" + filename, encoding="utf8")
