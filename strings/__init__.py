@@ -17,21 +17,24 @@ def get_string(lang: str):
 for filename in os.listdir(r"./strings/langs/"):
     if filename.endswith(".yml"):
         language_name = filename[:-4]
-        
+
         # Türkçəni ilk olaraq yükləyirik
         if language_name == "tr":  
             try:
-                # Türkçə faylını yükləməyə çalışırıq
-                languages["tr"] = yaml.safe_load(open(r"./strings/langs/tr.yml", encoding="utf8"))
+                print(f"Yüklənən fayl: {filename}")  # Debug mesajı
+                with open(r"./strings/langs/tr.yml", encoding="utf8") as file:
+                    languages["tr"] = yaml.safe_load(file)
                 languages_present["tr"] = languages["tr"]["name"]
-                print("Türkçe dil faylı uğurla yükləndi.")  # Debug mesajı
+                print(f"Türkçe dil faylı yükləndi: {languages['tr']}")  # Debug mesajı
             except Exception as e:
                 print(f"Türkçe dil faylı yüklənərkən xəta baş verdi: {e}")
                 sys.exit()
+
         else:
             # Digər dilləri yükləyirik
             try:
-                languages[language_name] = yaml.safe_load(open(r"./strings/langs/" + filename, encoding="utf8"))
+                with open(r"./strings/langs/" + filename, encoding="utf8") as file:
+                    languages[language_name] = yaml.safe_load(file)
                 # Türkçədən məlumatları əlavə edirik
                 for item in languages["tr"]:
                     if item not in languages[language_name]:
