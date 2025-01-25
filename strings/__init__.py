@@ -1,61 +1,36 @@
 import os
 import sys
-from typing import List
 import yaml
 
 languages = {}
-commands = {}
 languages_present = {}
-
-def get_command(value: str) -> List:
-    return commands["command"][value]
 
 def get_string(lang: str):
     return languages[lang]
 
 # Dil fayllarını yükləmək
-for filename in os.listdir(r"./strings/langs/"):
-    if filename.endswith(".yml"):
-        language_name = filename[:-4]
-
-        # Türkçəni ilk olaraq yükləyirik
-        if language_name == "tr":  
-            try:
-                print(f"Yüklənən fayl: {filename}")  # Debug mesajı
-                with open(r"./strings/langs/tr.yml", encoding="utf8") as file:
-                    languages["tr"] = yaml.safe_load(file)
-                languages_present["tr"] = languages["tr"]["name"]
-                print(f"Türkçe dil faylı yükləndi: {languages['tr']}")  # Debug mesajı
-            except Exception as e:
-                print(f"Türkçe dil faylı yüklənərkən xəta baş verdi: {e}")
-                sys.exit()
-
-        else:
-            # Digər dilləri yükləyirik
-            try:
-                with open(r"./strings/langs/" + filename, encoding="utf8") as file:
-                    languages[language_name] = yaml.safe_load(file)
-                # Türkçədən məlumatları əlavə edirik
-                for item in languages["tr"]:
-                    if item not in languages[language_name]:
-                        languages[language_name][item] = languages["tr"][item]
-            except Exception as e:
-                print(f"{language_name} dil faylı yüklənərkən xəta baş verdi: {e}")
-                sys.exit()
-
-        try:
-            languages_present[language_name] = languages[language_name]["name"]
-        except KeyError:
-            print(f"Error loading language file: {language_name}. Please check the language file format.")
-            sys.exit()
+try:
+    # Türkçe faylını yükləyirik (tuk.yml)
+    print("Türkçe dil faylını yükləyirik...")
+    with open(r"./strings/langs/tuk.yml", encoding="utf8") as file:
+        languages["tuk"] = yaml.safe_load(file)  # Burada 'tuk' dilini yükləyirik
+    languages_present["tuk"] = languages["tuk"]["name"]  # 'tuk' dilini istifadə edirik
+    print(f"Türkçe dil faylı uğurla yükləndi: {languages['tuk']}")
+except Exception as e:
+    print(f"Türkçe dil faylı yüklənərkən xəta baş verdi: {e}")
+    sys.exit()
 
 # Yüklənmiş dilləri yoxlayaq
 print("Languages loaded:", languages)
 
 # Əgər Türkçe yüklənməyibsə, Xəta mesajı verək
-if "tr" not in languages:
+if "tuk" not in languages:
     print("Türkçe dili tapılmadı. Dil faylının doğru yükləndiyini yoxlayın!")
     sys.exit()
 
 # Dil faylının düzgün yüklənib-yüklənmədiyini test edirik
-print("Türkçe dil faylı:", languages["tr"])
+print("Türkçe dil faylı:", languages["tuk"])
+
+# Faylın içindəki bütün dil məlumatlarını ekrana çıxartmaq (Test məqsədli)
+for item in languages["tuk"]:
+    print(f"{item}: {languages['tuk'][item]}")
