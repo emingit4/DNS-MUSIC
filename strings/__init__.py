@@ -36,9 +36,9 @@ for filename in os.listdir(r"./strings"):
 
 
 for filename in os.listdir(r"./strings/langs/"):
-    if "en" not in languages:
+    if "tuk" not in languages:
         languages["tuk"] = yaml.safe_load(
-            open(r"./strings/langs/en.yml", encoding="utf8")
+            open(r"./strings/langs/tuk.yml", encoding="utf8")
         )
         languages_present["tuk"] = languages["tuk"]["name"]
     if filename.endswith(".yml"):
