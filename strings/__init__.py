@@ -48,7 +48,7 @@ for filename in os.listdir(r"./strings/langs/"):
         languages[language_name] = yaml.safe_load(
             open(r"./strings/langs/" + filename, encoding="utf8")
         )
-        for item in languages["tr"]:
+        for item in languages["tuk"]:
             if item not in languages[language_name]:
                 languages[language_name][item] = languages["tuk"][item]
     try:
