@@ -30,11 +30,15 @@ for filename in os.listdir(r"./strings/langs/"):
                 sys.exit()
         else:
             # Digər dilləri yükləyirik
-            languages[language_name] = yaml.safe_load(open(r"./strings/langs/" + filename, encoding="utf8"))
-            # Türkçədən məlumatları əlavə edirik
-            for item in languages["tr"]:
-                if item not in languages[language_name]:
-                    languages[language_name][item] = languages["tr"][item]
+            try:
+                languages[language_name] = yaml.safe_load(open(r"./strings/langs/" + filename, encoding="utf8"))
+                # Türkçədən məlumatları əlavə edirik
+                for item in languages["tr"]:
+                    if item not in languages[language_name]:
+                        languages[language_name][item] = languages["tr"][item]
+            except Exception as e:
+                print(f"{language_name} dil faylı yüklənərkən xəta baş verdi: {e}")
+                sys.exit()
 
         try:
             languages_present[language_name] = languages[language_name]["name"]
@@ -49,3 +53,6 @@ print("Languages loaded:", languages)
 if "tr" not in languages:
     print("Türkçe dili tapılmadı. Dil faylının doğru yükləndiyini yoxlayın!")
     sys.exit()
+
+# Dil faylının düzgün yüklənib-yüklənmədiyini test edirik
+print("Türkçe dil faylı:", languages["tr"])
